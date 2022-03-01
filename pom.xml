@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.bruce</groupId>
-    <artifactId>tree_generator</artifactId>
+    <artifactId>tree-generator</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <dependencies>
@@ -46,6 +46,18 @@
 
 
     </dependencies>
+    <distributionManagement>
+        <repository>
+            <id>rdc-releases</id>
+            <name>Rdc Release Repository</name>
+            <url>https://packages.aliyun.com/maven/repository/2193626-release-PLve60/</url>
+        </repository>
+        <snapshotRepository>
+            <id>rdc-snapshots</id>
+            <name>Rdc Snapshot Repository</name>
+            <url>https://packages.aliyun.com/maven/repository/2193626-snapshot-0paalN/</url>
+        </snapshotRepository>
+    </distributionManagement>
 
     <build>
         <plugins>
