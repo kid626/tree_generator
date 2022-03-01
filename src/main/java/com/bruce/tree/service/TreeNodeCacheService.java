@@ -273,7 +273,7 @@ public abstract class TreeNodeCacheService<T extends TreeNode, F extends TreeNod
         if (parentId == getParentId()) {
             List<T> list = queryByPid(parentId);
             int num = list.size();
-            String code = String.valueOf(101 + num);
+            String code = String.valueOf(getStartPrefix() + num);
             if (code.length() < getCodeSize()) {
                 code = StringUtils.rightPad(code, getCodeSize(), '0');
             }
@@ -291,7 +291,7 @@ public abstract class TreeNodeCacheService<T extends TreeNode, F extends TreeNod
                 // 获取当前节点下有多少个子节点
                 int num = list.size();
                 // 需要排除父节点本身
-                code = code.concat(String.valueOf((101 + num - 1)));
+                code = code.concat(String.valueOf((getStartPrefix() + num - 1)));
                 if (code.length() < getCodeSize()) {
                     code = StringUtils.rightPad(code, getCodeSize(), '0');
                 }
@@ -321,6 +321,16 @@ public abstract class TreeNodeCacheService<T extends TreeNode, F extends TreeNod
             sb.append(code.charAt(i));
         }
         return sb.toString();
+    }
+
+
+    private long getStartPrefix() {
+        int codeBit = getCodeBit();
+        long result = 1;
+        for (int i = 0; i < codeBit - 1; i++) {
+            result *= 10;
+        }
+        return result + 1;
     }
 
 }
