@@ -10,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 
+import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -136,7 +137,15 @@ public abstract class TreeNodeCacheService<T extends TreeNode, F extends TreeNod
      * @return 根节点
      */
     @Override
-    public abstract T initRoot();
+    public T initRoot() {
+        T root = getInstanceT();
+        root.setId(this.getParentId());
+        root.setPId(-1L);
+        root.setName("root");
+        root.setCode(this.getPCode());
+        this.insert(root);
+        return root;
+    }
 
     /**
      * 新增
@@ -331,6 +340,26 @@ public abstract class TreeNodeCacheService<T extends TreeNode, F extends TreeNod
             result *= 10;
         }
         return result + 1;
+    }
+
+    private String getPCode() {
+        StringBuilder sb = new StringBuilder("1");
+        int codeSize = getCodeSize();
+        while (sb.length() < codeSize) {
+            sb.append("0");
+        }
+        return sb.toString();
+    }
+
+    private T getInstanceT() {
+        ParameterizedType superClass = (ParameterizedType) getClass().getGenericSuperclass();
+        Class<T> type = (Class<T>) superClass.getActualTypeArguments()[0];
+        try {
+            return type.newInstance();
+        } catch (Exception e) {
+            // Oops, no default constructor
+            throw new RuntimeException(e);
+        }
     }
 
 }
