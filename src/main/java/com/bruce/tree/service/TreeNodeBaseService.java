@@ -1,6 +1,5 @@
 package com.bruce.tree.service;
 
-import com.bruce.tree.model.convert.TreeNodeConvert;
 import com.bruce.tree.model.form.TreeNodeForm;
 import com.bruce.tree.model.po.TreeNode;
 import com.bruce.tree.model.vo.TreeNodeVo;
@@ -26,7 +25,7 @@ public abstract class TreeNodeBaseService<T extends TreeNode, F extends TreeNode
      *
      * @return TreeNodeConvert
      */
-    public abstract TreeNodeConvert<T, F, V> generateConvert();
+    public abstract TreeNodeConvertService<T, F, V> generateConvert();
 
     /**
      * 根据主键获取
